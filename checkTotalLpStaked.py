@@ -1,7 +1,8 @@
 import json
 import requests
+from pprint import pprint
 
-with open('walletsList.json') as f:
+with open('lpStakersDetail.json') as f:
 	data = json.load(f)
 
 # calculate
@@ -45,5 +46,6 @@ def get_data():
 		actual[int(pool['poolID'],0)] = int(pool['totalStakedBalance'],0)
 get_data()
 
-print(actual)
+pprint(expected)
+pprint(actual)
 assert expected == actual

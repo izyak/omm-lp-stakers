@@ -6,7 +6,7 @@ import concurrent.futures
 
 csvList = [["wallet","iusdc","sicx","usds"]]
 count = 0
-with open('wallets1.json') as f:
+with open('wallets.json') as f:
 	data = json.load(f)
 
 @retry(Exception, tries=20, delay=1, back_off=2)
@@ -43,10 +43,9 @@ def get_data(wallet):
 	row.append(sicx_bal)
 	row.append(usds_bal)
 	csvList.append(row)
-	print(row," :> lmao :< ")
 
 if __name__ == '__main__':
 	with concurrent.futures.ThreadPoolExecutor(max_workers=32) as executor:
 		executor.map(get_data, data)
-	with open("walletsList.json",'w') as outfile:
+	with open("lpStakersDetail.json",'w') as outfile:
   		json.dump(csvList, outfile)

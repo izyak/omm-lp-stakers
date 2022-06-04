@@ -1,6 +1,7 @@
 import concurrent.futures
 import json
 import requests
+import sys
 import time
 from pprint import pprint
 from checkscore.repeater import retry
@@ -23,7 +24,7 @@ def get_txn_hashes(page):
 
 start_time = time.perf_counter()
 with concurrent.futures.ThreadPoolExecutor(max_workers=32) as executor:
-	executor.map(get_txn_hashes, [i for i in range(0,2000)])
+	executor.map(get_txn_hashes, [i for i in range(0,int(sys.argv[1]))])
 end_time = time.perf_counter()
 print(f"Took total of {end_time-start_time} seconds to fetch data")
 print(f"Total of: {len(txnHashes)} transactions")
@@ -47,5 +48,5 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=32) as executor:
 end_time = time.perf_counter()
 print(f"Took total of {end_time-start_time} seconds to query all transactions")
 
-with open("wallets1.json",'w') as outfile:
+with open("wallets.json",'w') as outfile:
   json.dump(list(set(wallets)), outfile)
